@@ -1,36 +1,56 @@
 var Schema = require('mongoose').Schema;
 var timestamp = require('mongoose-timestamp');
 
+var Schema = require('mongoose').Schema;
+
 var reportSchema = new Schema({
-  ICCID:{
+  type: {
     type: String,
-    trim: true
+    required: true,
+    default: "Feature"
   },
-  OAUTHID:{
-    type: String,
-    trim: true
+  geometry: {
+    type: {
+      type: String,
+      required: true,
+      default:"Point"
+    },
+    coordinates: [Number]
   },
-  LSID:{
-    type: String,
-    trim: true
-  },
-  Abundance:{
-    type: String,
-    trim: true
-  },
-  Precision:{
-    type: String,
-    trim: true
-  },
-  Comment:{
-    type: String,
-    trim: true
-  },
-  Status:{
-    type: String,
-    trim: true,
-    default: 'submitted'
-  },
+  properties: {
+    ICCID:{
+      type: String,
+      trim: true
+    },
+    OAUTHID:{
+      type: String,
+      trim: true
+    },
+    LSID:{
+      type: String,
+      trim: true
+    },
+    Abundance:{
+      type: String,
+      trim: true
+    },
+    Precision:{
+      type: String,
+      trim: true
+    },
+    Comment:{
+      type: String,
+      trim: true
+    },
+    Status:{
+      type: String,
+      trim: true,
+      default: 'submitted'
+    },
+    Image:{
+      type: Array
+    }
+  }
 });
 
 module.exports = reportSchema.plugin(timestamp);
