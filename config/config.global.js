@@ -5,6 +5,7 @@ config.mongo = {};
 config.server.name = '';
 config.server.version = '';
 config.server.port = '';
+config.server.path = '';
 
 config.mongo.server = '';
 config.mongo.port = '';

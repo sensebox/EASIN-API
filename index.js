@@ -1,23 +1,46 @@
+'use strict';
 var cfg = require('./config');
 var restify = require('restify');
+var routes = require('./routes');
+var mongoose = require('mongoose');
 
-var server = restify.createServer({
-  name: cfg.server.name,
-  version: cfg.server.version
+mongoose.connect('mongodb://localhost/easin',{
+  // user: cfg.dbuser,
+  // pass: cfg.dbuserpass
+});
+
+var db = mongoose.connection;
+db.on('error', function(){
+  console.error.bind(console, 'connection error:')
+});
+
+db.once('open', function(callback){
+
+  var server = createServer();
+
+  routes.SetupRoutes(server,cfg.server.path);
+
+  server.listen(cfg.server.port, function () {
+    console.log('%s listening at %s', server.name, server.url);
+  });
+});
+
+db.on('close', function(callback){
+  console.log("connection close");
+  process.exit();
 });
 
 
-server.use(restify.acceptParser(server.acceptable));
-server.use(restify.queryParser());
-server.use(restify.bodyParser());
+function createServer(){
 
+  var server = restify.createServer({
+    name: cfg.server.name,
+    version: cfg.server.version
+  });
 
-server.get('/echo/:name', function (req, res, next) {
-  res.send(req.params);
-  return next();
-});
+  server.use(restify.acceptParser(server.acceptable));
+  server.use(restify.queryParser());
+  server.use(restify.bodyParser());
 
-
-server.listen(cfg.server.port, function () {
-  console.log('%s listening at %s', server.name, server.url);
-});
+  return server;
+}
