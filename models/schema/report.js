@@ -47,9 +47,7 @@ var reportSchema = new Schema({
       trim: true,
       default: 'submitted'
     },
-    Image:{
-      type: Array
-    }
+    Image:[String]
   }
 });
 

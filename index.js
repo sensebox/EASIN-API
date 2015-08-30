@@ -4,9 +4,9 @@ var restify = require('restify');
 var routes = require('./routes');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/easin',{
-  // user: cfg.dbuser,
-  // pass: cfg.dbuserpass
+mongoose.connect('mongodb://'+cfg.mongo.server+':'+cfg.mongo.port+'/'+cfg.mongo.collection,{
+  user: cfg.mongo.dbuser,
+  pass: cfg.mongo.dbpass
 });
 
 var db = mongoose.connection;
