@@ -47,6 +47,9 @@ var reportSchema = new Schema({
       trim: true,
       default: 'submitted'
     },
+    Anonymous:{
+      type: Boolean
+    },
     Image:[String]
   }
 });
